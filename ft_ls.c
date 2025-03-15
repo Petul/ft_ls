@@ -6,7 +6,7 @@
 /*   By: pleander <pleander@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 16:04:12 by pleander          #+#    #+#             */
-/*   Updated: 2025/03/15 19:10:30 by pleander         ###   ########.fr       */
+/*   Updated: 2025/03/15 21:08:31 by pleander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,30 +28,36 @@ static void read_dir(DIR *d, t_list **dirc)
 	while (drnt)
 	{
 		name = ft_strdup(drnt->d_name);
-		ft_printf("%s\n", name);
 		if (!name)
 			error_exit("ft_strdup");
 		if (!memlist_add(name))
 			error_exit("memlist_add");
-		new = ft_lstnew(drnt);
+		new = ft_lstnew(name);
 		if (!memlist_add(new))
 			error_exit("memlist_add");
-		ft_lstadd_front(dirc, new);
+		ft_lstadd_back(dirc, new);
 		drnt = readdir(d);
 	}
 }
 
+void print_list(void *fname)
+{
+	ft_printf("%s\n", (char *)fname);
+}
+
 int	ft_ls(char *path, t_config *config, int recursive)
 {
-	DIR *d;
-	t_list	*dirc;
+	DIR		*d;
+	t_list	**dirc;
 
 	dirc = creserve(1, sizeof(t_list *));
 	if (!dirc)
 		error_exit("creserve");
 	d = opendir(path);
-	read_dir(d, &dirc);
+	read_dir(d, dirc);
 	closedir(d);
+	ft_lstsort(dirc, &lexcmp);
+	ft_lstiter(*dirc, &print_list);
 	return (0);
 }
 

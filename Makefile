@@ -6,7 +6,7 @@
 #    By: pleander <pleander@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/14 14:57:23 by pleander          #+#    #+#              #
-#    Updated: 2025/03/15 18:40:29 by pleander         ###   ########.fr        #
+#    Updated: 2025/03/15 21:06:25 by pleander         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@
 NAME := ft_ls
 CC := gcc
 CFLAGS := -Wall -Wextra -g #-Werror
-CFILES := main.c config.c ft_ls.c error.c
+CFILES := main.c config.c ft_ls.c error.c compare.c
 INCLUDES := libft/include
 
 LIBFT := libft/libft.a
