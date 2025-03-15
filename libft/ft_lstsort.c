@@ -6,7 +6,7 @@
 /*   By: pleander <pleander@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/15 14:47:21 by pleander          #+#    #+#             */
-/*   Updated: 2025/03/15 15:52:43 by pleander         ###   ########.fr       */
+/*   Updated: 2025/03/15 21:08:16 by pleander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void	ft_lstsort(t_list **begin_list, int (*cmp)(void *, void *))
 
 	if (!begin_list || !*begin_list)
 		return ;
-	cur = *begin_list;
 	while (!is_sorted(*begin_list, cmp))
 	{
+		cur = *begin_list;
 		while (cur && cur->next)
 		{
 			if (cmp(cur->content, cur->next->content) > 0)
