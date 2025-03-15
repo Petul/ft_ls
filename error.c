@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pleander <pleander@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/14 14:37:58 by pleander          #+#    #+#             */
-/*   Updated: 2025/03/15 18:50:30 by pleander         ###   ########.fr       */
+/*   Created: 2025/03/15 18:36:43 by pleander          #+#    #+#             */
+/*   Updated: 2025/03/15 18:40:16 by pleander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include <unistd.h>
+#include "ft_printf.h"
+#include "memlist.h"
 
-int	main(int argc, char **argv)
+void	error_exit(char *msg)
 {
-	t_config config;
-	apply_default_config(&config);
-	//print_config(&config);
-	ft_ls(".", &config, 0);
-	return (0);
+	ft_dprintf(STDERR_FILENO, "Error: %s\n", msg);
+	memlist_release_all();
 }

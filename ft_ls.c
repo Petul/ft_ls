@@ -6,28 +6,52 @@
 /*   By: pleander <pleander@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 16:04:12 by pleander          #+#    #+#             */
-/*   Updated: 2025/03/15 14:40:31 by pleander         ###   ########.fr       */
+/*   Updated: 2025/03/15 19:10:30 by pleander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+#include "memlist.h"
 #include "ft_ls.h"
 #include "ft_printf.h"
+#include <stdlib.h>
 #include <sys/types.h>
 #include <dirent.h>
+
+static void read_dir(DIR *d, t_list **dirc)
+{
+	t_list			*new;
+	char			*name;
+	struct dirent	*drnt;
+
+	drnt = readdir(d);
+	while (drnt)
+	{
+		name = ft_strdup(drnt->d_name);
+		ft_printf("%s\n", name);
+		if (!name)
+			error_exit("ft_strdup");
+		if (!memlist_add(name))
+			error_exit("memlist_add");
+		new = ft_lstnew(drnt);
+		if (!memlist_add(new))
+			error_exit("memlist_add");
+		ft_lstadd_front(dirc, new);
+		drnt = readdir(d);
+	}
+}
 
 int	ft_ls(char *path, t_config *config, int recursive)
 {
 	DIR *d;
-	struct dirent *drnt;
+	t_list	*dirc;
 
+	dirc = creserve(1, sizeof(t_list *));
+	if (!dirc)
+		error_exit("creserve");
 	d = opendir(path);
-	drnt = readdir(d);
-	while (drnt)
-	{
-		ft_printf("%s\n", drnt->d_name);
-		drnt = readdir(d);
-	}
-	ft_printf("\n");
+	read_dir(d, &dirc);
+	closedir(d);
 	return (0);
 }
 

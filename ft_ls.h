@@ -6,7 +6,7 @@
 /*   By: pleander <pleander@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:24:16 by pleander          #+#    #+#             */
-/*   Updated: 2025/03/14 16:43:58 by pleander         ###   ########.fr       */
+/*   Updated: 2025/03/15 18:40:12 by pleander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,6 @@ typedef struct s_config
 int		ft_ls(char *path, t_config *config, int recursive);
 void	apply_default_config(t_config *c);
 void	print_config(t_config *c);
+void	error_exit(char *msg);
 
 #endif
