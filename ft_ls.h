@@ -6,7 +6,7 @@
 /*   By: pleander <pleander@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:24:16 by pleander          #+#    #+#             */
-/*   Updated: 2025/03/16 13:02:34 by pleander         ###   ########.fr       */
+/*   Updated: 2025/03/16 13:20:41 by pleander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ typedef struct s_config
 	uint8_t sort_by;
 
 }	t_config;
+
+typedef struct dirent t_dirent;
 
 int		ft_ls(char *path, t_config *config, int recursive);
 void	apply_default_config(t_config *c);
