@@ -6,7 +6,7 @@
 /*   By: pleander <pleander@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 16:04:12 by pleander          #+#    #+#             */
-/*   Updated: 2025/03/16 13:21:21 by pleander         ###   ########.fr       */
+/*   Updated: 2025/03/16 18:56:14 by pleander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,6 @@ static void read_dir(DIR *d, t_list **dirc)
 	}
 }
 
-void print_list(void *f)
-{
-
-	ft_printf("%s\n", ((t_dirent *)f)->d_name);
-}
-
 int	ft_ls(char *path, t_config *config, int recursive)
 {
 	DIR		*d;
@@ -57,7 +51,7 @@ int	ft_ls(char *path, t_config *config, int recursive)
 	read_dir(d, dirc);
 	closedir(d);
 	sort_files(dirc, config);
-	ft_lstiter(*dirc, &print_list);
+	print_list(dirc, config);
 	return (0);
 }
 
