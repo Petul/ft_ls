@@ -6,32 +6,32 @@
 /*   By: pleander <pleander@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 16:04:12 by pleander          #+#    #+#             */
-/*   Updated: 2025/03/16 13:03:05 by pleander         ###   ########.fr       */
+/*   Updated: 2025/03/16 13:17:18 by pleander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sys/types.h>
+#include <dirent.h>
 #include "libft.h"
 #include "memlist.h"
 #include "ft_ls.h"
 #include "ft_printf.h"
-#include <sys/types.h>
-#include <dirent.h>
 
 static void read_dir(DIR *d, t_list **dirc)
 {
 	t_list			*new;
-	char			*name;
+	struct dirent	*drnt_copy;
 	struct dirent	*drnt;
 
 	drnt = readdir(d);
 	while (drnt)
 	{
-		name = ft_strdup(drnt->d_name);
-		if (!name)
-			error_exit("ft_strdup");
-		if (!memlist_add(name))
-			error_exit("memlist_add");
-		new = ft_lstnew(name);
+
+		drnt_copy = reserve(sizeof(struct dirent));
+		if (!drnt_copy)
+			error_exit("reserve");
+		ft_memcpy(drnt_copy, drnt, sizeof(struct dirent));
+		new = ft_lstnew(drnt_copy);
 		if (!memlist_add(new))
 			error_exit("memlist_add");
 		ft_lstadd_back(dirc, new);
@@ -39,9 +39,10 @@ static void read_dir(DIR *d, t_list **dirc)
 	}
 }
 
-void print_list(void *fname)
+void print_list(void *f)
 {
-	ft_printf("%s\n", (char *)fname);
+
+	ft_printf("%s\n", ((struct dirent *)f)->d_name);
 }
 
 int	ft_ls(char *path, t_config *config, int recursive)

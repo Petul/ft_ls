@@ -6,16 +6,19 @@
 /*   By: pleander <pleander@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:59:21 by pleander          #+#    #+#             */
-/*   Updated: 2025/03/16 13:03:43 by pleander         ###   ########.fr       */
+/*   Updated: 2025/03/16 13:14:41 by pleander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <dirent.h>
 #include <stddef.h>
 #include "ft_ls.h"
 #include "libft.h"
 
-static int lexcmp(const char *s1, const char *s2)
+static int lexcmp(const struct dirent *f1, const struct dirent *f2)
 {
+	const char *s1 = f1->d_name;
+	const char *s2 = f2->d_name;
 	size_t	i;
 	int c1;
 	int c2;
