@@ -6,7 +6,7 @@
 /*   By: pleander <pleander@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 16:04:12 by pleander          #+#    #+#             */
-/*   Updated: 2025/03/15 21:08:31 by pleander         ###   ########.fr       */
+/*   Updated: 2025/03/16 13:03:05 by pleander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "memlist.h"
 #include "ft_ls.h"
 #include "ft_printf.h"
-#include <stdlib.h>
 #include <sys/types.h>
 #include <dirent.h>
 
@@ -56,7 +55,7 @@ int	ft_ls(char *path, t_config *config, int recursive)
 	d = opendir(path);
 	read_dir(d, dirc);
 	closedir(d);
-	ft_lstsort(dirc, &lexcmp);
+	sort_files(dirc, config);
 	ft_lstiter(*dirc, &print_list);
 	return (0);
 }

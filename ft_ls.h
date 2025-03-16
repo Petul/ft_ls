@@ -6,11 +6,12 @@
 /*   By: pleander <pleander@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:24:16 by pleander          #+#    #+#             */
-/*   Updated: 2025/03/15 21:06:50 by pleander         ###   ########.fr       */
+/*   Updated: 2025/03/16 13:02:34 by pleander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdint.h>
+#include "libft.h"
 
 #ifndef FT_LS_H
 # define FT_LS_H
@@ -47,6 +48,6 @@ int		ft_ls(char *path, t_config *config, int recursive);
 void	apply_default_config(t_config *c);
 void	print_config(t_config *c);
 void	error_exit(char *msg);
-int		lexcmp(const char *s1, const char *s2);
+void	sort_files(t_list **files, t_config *config);
 
 #endif
