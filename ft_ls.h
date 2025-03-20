@@ -6,7 +6,7 @@
 /*   By: pleander <pleander@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:24:16 by pleander          #+#    #+#             */
-/*   Updated: 2025/03/16 19:11:17 by pleander         ###   ########.fr       */
+/*   Updated: 2025/03/20 15:25:28 by pleander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@
 #define LIST_TYPE_LIST		(1 << 0)
 #define LIST_TYPE_ROWS		(1 << 1)
 
+#define FLAGS "al"
+
 typedef struct s_config
 {
 	uint8_t fields;
@@ -52,5 +54,6 @@ void	print_config(t_config *c);
 void	error_exit(char *msg);
 void	sort_files(t_list **files, t_config *config);
 void	print_list(t_list **files, t_config *config);
+void	parse_flags(int argc, char **argv, t_config *config);
 
 #endif
