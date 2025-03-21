@@ -13,7 +13,7 @@
 NAME := ft_ls
 CC := gcc
 CFLAGS := -Wall -Wextra -g #-Werror
-CFILES := main.c config.c ft_ls.c error.c sort.c print.c parse_flags.c
+CFILES := main.c config.c ft_ls.c error.c sort.c print.c parse_args.c
 INCLUDES := libft/include
 
 LIBFT := libft/libft.a

@@ -6,7 +6,7 @@
 /*   By: pleander <pleander@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:24:16 by pleander          #+#    #+#             */
-/*   Updated: 2025/03/20 15:25:28 by pleander         ###   ########.fr       */
+/*   Updated: 2025/03/21 11:00:00 by pleander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	print_config(t_config *c);
 void	error_exit(char *msg);
 void	sort_files(t_list **files, t_config *config);
 void	print_list(t_list **files, t_config *config);
-void	parse_flags(int argc, char **argv, t_config *config);
+void	parse_args(int argc, char **argv, t_config *config, char **dirs);
+int		count_dirs(char **argv);
 
 #endif

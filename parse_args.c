@@ -6,12 +6,13 @@
 /*   By: pleander <pleander@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 14:01:22 by pleander          #+#    #+#             */
-/*   Updated: 2025/03/20 15:58:41 by pleander         ###   ########.fr       */
+/*   Updated: 2025/03/21 10:59:49 by pleander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
 #include "libft.h"
+#include "memlist.h"
+#include "ft_ls.h"
 
 static int	read_flag(char f, t_config *config)
 {
@@ -27,28 +28,45 @@ static int	read_flag(char f, t_config *config)
 	return (1);
 }
 
-void	parse_flags(int argc, char **argv, t_config *config)
+int	count_dirs(char **argv)
 {
-	int f;
+	int c;
 
-	if (argc <= 1)
-		return;
-	argv++;
-	f = 0;
-	while (argv && *argv)
+	c = 0;
+	while (*argv)
 	{
-		while(**argv)
-		{
-			if (**argv == '-')
-				f = 1;
-			else if (f)
-			{
-				if (!read_flag(**argv, config))
-					f = 0;
-			}
-			(*argv)++;
-		}
+		if (**argv != '-')
+			c++;
 		argv++;
 	}
-	
+	if (c == 0)
+		c = 1;
+	return (c);
+}
+
+void	parse_args(int argc, char **argv, t_config *config, char **dirs)
+{
+	int		n;
+
+	if (argc <= 1)
+		return ;
+	argv++;
+	if (!dirs)
+		error_exit("reserve");
+	n = 0;
+	while (argv && *argv)
+	{
+		if (**argv == '-')
+		{
+			(*argv)++;
+			while(**argv)
+			{
+				read_flag(**argv, config);
+				(*argv)++;
+			}
+		}
+		else
+			dirs[n] = *argv;
+		argv++;
+	}
 }
