@@ -48,13 +48,13 @@ typedef struct s_config
 
 typedef struct dirent t_dirent;
 
-int		ft_ls(char *path, t_config *config, int recursive);
+int		ft_ls(char *path, t_config *config);
 void	apply_default_config(t_config *c);
 void	print_config(t_config *c);
 void	error_exit(char *msg);
 void	sort_files(t_list **files, t_config *config);
-void	print_list(t_list **files, t_config *config);
-void	parse_args(int argc, char **argv, t_config *config, char **dirs);
+void	print_list(t_list **dirc, t_config *config);
+void	parse_args(int argc, char **argv, t_config *config, t_list **dirs);
 int		count_dirs(char **argv);
 
 #endif

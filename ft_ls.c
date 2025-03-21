@@ -15,7 +15,6 @@
 #include "libft.h"
 #include "memlist.h"
 #include "ft_ls.h"
-#include "ft_printf.h"
 
 static void read_dir(DIR *d, t_list **dirc)
 {
@@ -32,6 +31,8 @@ static void read_dir(DIR *d, t_list **dirc)
 			error_exit("reserve");
 		ft_memcpy(drnt_copy, drnt, sizeof(t_dirent));
 		new = ft_lstnew(drnt_copy);
+		if (!new)
+			error_exit("ft_lstnew");
 		if (!memlist_add(new))
 			error_exit("memlist_add");
 		ft_lstadd_back(dirc, new);
@@ -39,7 +40,7 @@ static void read_dir(DIR *d, t_list **dirc)
 	}
 }
 
-int	ft_ls(char *path, t_config *config, int recursive)
+int	ft_ls(char *path, t_config *config)
 {
 	DIR		*d;
 	t_list	**dirc;

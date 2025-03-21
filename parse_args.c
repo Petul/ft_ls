@@ -44,16 +44,25 @@ int	count_dirs(char **argv)
 	return (c);
 }
 
-void	parse_args(int argc, char **argv, t_config *config, char **dirs)
+static void	add_to_list(t_list **dirs, char *arg)
 {
-	int		n;
+	t_list	*new;
 
+	new = ft_lstnew(arg);
+	if (!new)
+		error_exit("ft_lstnew");
+	if (!memlist_add(new))
+		error_exit("memlist_add");
+	ft_lstadd_back(dirs, new);
+}
+
+void	parse_args(int argc, char **argv, t_config *config, t_list **dirs)
+{
 	if (argc <= 1)
 		return ;
 	argv++;
 	if (!dirs)
 		error_exit("reserve");
-	n = 0;
 	while (argv && *argv)
 	{
 		if (**argv == '-')
@@ -66,7 +75,7 @@ void	parse_args(int argc, char **argv, t_config *config, char **dirs)
 			}
 		}
 		else
-			dirs[n] = *argv;
+			add_to_list(dirs, *argv);
 		argv++;
 	}
 }

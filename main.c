@@ -10,23 +10,48 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_ls.h"
+#include "libft.h"
 #include "memlist.h"
+#include "ft_printf.h"
+#include "ft_ls.h"
+
+static void	list_dirs(t_list *dirs, t_config *config);
 
 int	main(int argc, char **argv)
 {
 	t_config config;
-	char **dirs;
+	t_list	*dirs;
 
-	dirs = creserve(count_dirs(argv), sizeof(char *));
-	if (!dirs)
-		error_exit("creserve");
+	dirs = NULL;
 	apply_default_config(&config);
-	parse_args(argc, argv, &config, dirs);
+	parse_args(argc, argv, &config, &dirs);
 	//print_config(&config);
-	if (!dirs[0])
-		dirs[0] = ".";
-	ft_ls(dirs[0], &config, 0);
+	int size = ft_lstsize(dirs);
+	if (size == 0)
+	{
+		t_list *new = ft_lstnew(".");
+		ft_lstadd_back(&dirs, new);
+	}
+	list_dirs(dirs, &config);
 	memlist_release_all();
 	return (0);
+}
+
+static void	list_dirs(t_list *dirs, t_config *config)
+{
+	int n;
+	int	i;
+
+	i = 0;
+	n = ft_lstsize(dirs);
+	while(dirs)
+	{
+		if (n > 1)
+			ft_printf("%s:\n", (char *)dirs->content);
+		ft_ls(dirs->content, config);
+		if (i != n - 1)
+			ft_printf("\n");
+		i++;
+		dirs = dirs->next;
+	}
 }

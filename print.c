@@ -47,7 +47,7 @@ void print_list(t_list **dirc, t_config *config)
 	while (cur)
 	{
 		print_file((t_dirent *)cur->content, config);
+
 		cur = cur->next;
 	}
-	
 }
