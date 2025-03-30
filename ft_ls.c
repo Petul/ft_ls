@@ -25,7 +25,6 @@ static void read_dir(DIR *d, t_list **dirc)
 	drnt = readdir(d);
 	while (drnt)
 	{
-
 		drnt_copy = reserve(sizeof(t_dirent));
 		if (!drnt_copy)
 			error_exit("reserve");
@@ -52,7 +51,7 @@ int	ft_ls(char *path, t_config *config)
 	read_dir(d, dirc);
 	closedir(d);
 	sort_files(dirc, config);
-	print_list(dirc, config);
+	print_list(path, dirc, config);
 	return (0);
 }
 

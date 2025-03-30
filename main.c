@@ -25,11 +25,11 @@ int	main(int argc, char **argv)
 	dirs = NULL;
 	apply_default_config(&config);
 	parse_args(argc, argv, &config, &dirs);
-	//print_config(&config);
 	int size = ft_lstsize(dirs);
 	if (size == 0)
 	{
 		t_list *new = ft_lstnew(".");
+		memlist_add(new);
 		ft_lstadd_back(&dirs, new);
 	}
 	list_dirs(dirs, &config);

@@ -25,6 +25,10 @@ static int	read_flag(char f, t_config *config)
 		config->files |= FILES_HIDDEN;
 		config->files |= FILES_SPECIAL;
 	}
+	else if (f == 'l')
+	{
+		config->fields = 255; // Enable all fields
+	}
 	return (1);
 }
 
