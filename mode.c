@@ -16,6 +16,46 @@
 #include "memlist.h"
 #include "ft_ls.h"
 
+static void	get_user_modes(t_fields *fields, struct stat *statbuf, int pos)
+{
+	if (++pos && (statbuf->st_mode & S_IRUSR))
+		fields->mode[pos] = 'r';
+	if (++pos && (statbuf->st_mode & S_IWUSR))
+		fields->mode[pos] = 'w';
+	if (++pos && (statbuf->st_mode & S_IXUSR))
+		fields->mode[pos] = 'x';
+	if (++pos && (statbuf->st_mode & S_IRGRP))
+		fields->mode[pos] = 'r';
+	if (++pos && (statbuf->st_mode & S_IWGRP))
+		fields->mode[pos] = 'w';
+	if (++pos && (statbuf->st_mode & S_IXGRP))
+		fields->mode[pos] = 'x';
+	if (++pos && (statbuf->st_mode & S_IROTH))
+		fields->mode[pos] = 'r';
+	if (++pos && (statbuf->st_mode & S_IWOTH))
+		fields->mode[pos] = 'w';
+	if (++pos && (statbuf->st_mode & S_IXOTH))
+		fields->mode[pos] = 'x';
+}
+
+static void	get_file_type(t_fields *fields, struct stat *statbuf, int pos)
+{
+	if (S_ISREG(statbuf->st_mode))
+		fields->mode[pos] = '-';
+	else if (S_ISDIR(statbuf->st_mode))
+		fields->mode[pos] = 'd';
+	else if (S_ISCHR(statbuf->st_mode))
+		fields->mode[pos] = 'c';
+	else if (S_ISBLK(statbuf->st_mode))
+		fields->mode[pos] = 'b';
+	else if (S_ISLNK(statbuf->st_mode))
+		fields->mode[pos] = 'l';
+	else if (S_ISSOCK(statbuf->st_mode))
+		fields->mode[pos] = 's';
+	else if (S_ISFIFO(statbuf->st_mode))
+		fields->mode[pos] = 'p';
+}
+
 void	get_mode(t_fields *fields, char *fpath)
 {
 	struct	stat	statbuf;
@@ -30,22 +70,6 @@ void	get_mode(t_fields *fields, char *fpath)
 	fields->mode[10] = '\0';
 	if (lstat(fpath, &statbuf) < 0)
 		error_exit("lstat");
-	if (++i && (statbuf.st_mode & S_IRUSR))
-		fields->mode[i] = 'r';
-	if (++i && (statbuf.st_mode & S_IWUSR))
-		fields->mode[i] = 'w';
-	if (++i && (statbuf.st_mode & S_IXUSR))
-		fields->mode[i] = 'x';
-	if (++i && (statbuf.st_mode & S_IRGRP))
-		fields->mode[i] = 'r';
-	if (++i && (statbuf.st_mode & S_IWGRP))
-		fields->mode[i] = 'w';
-	if (++i && (statbuf.st_mode & S_IXGRP))
-		fields->mode[i] = 'x';
-	if (++i && (statbuf.st_mode & S_IROTH))
-		fields->mode[i] = 'r';
-	if (++i && (statbuf.st_mode & S_IWOTH))
-		fields->mode[i] = 'w';
-	if (++i && (statbuf.st_mode & S_IXOTH))
-		fields->mode[i] = 'x';
+	get_file_type(fields, &statbuf, i);
+	get_user_modes(fields, &statbuf, i);
 }
