@@ -6,11 +6,12 @@
 /*   By: pleander <pleander@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 13:22:56 by pleander          #+#    #+#             */
-/*   Updated: 2025/03/28 08:25:32 by pleander         ###   ########.fr       */
+/*   Updated: 2025/04/01 18:49:51 by pleander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <dirent.h>
+#include <sys/stat.h>
 #include "ft_ls.h"
 #include "libft.h"
 #include "memlist.h"
@@ -34,6 +35,8 @@ static void	print_fields(t_fields *fields, t_config *config)
 {
 	if (config->fields & FIELDS_MODE)
 		ft_printf("%s ", fields->mode);
+	if (config->fields & FIELDS_COUNT)
+		ft_printf("%s ", fields->hard_links);
 	if (config->fields & FIELDS_FILENAME)
 		ft_printf("%s", fields->filename);
 	ft_printf("\n");
@@ -41,6 +44,7 @@ static void	print_fields(t_fields *fields, t_config *config)
 
 static void make_fields(char *dirpath, const t_dirent *f, t_config *config)
 {
+	struct stat statbuf;
 	t_fields	fields;
 	char		*fpath;
 
@@ -49,8 +53,13 @@ static void make_fields(char *dirpath, const t_dirent *f, t_config *config)
 		error_exit("ft_strdup");
 	memlist_add(fields.filename);
 	fpath = make_fpath(dirpath, f);
+	if (lstat(fpath, &statbuf) < 0)
+		error_exit("lstat");
 	if (config->fields & FIELDS_MODE)
-		get_mode(&fields, fpath);
+		get_mode(&fields, &statbuf);
+	if (config->fields & FIELDS_COUNT)
+		get_hard_link_count(&fields, &statbuf);
+	
 	print_fields(&fields, config);
 	
 	if (config->fields & FIELDS_MODE)
@@ -78,27 +87,6 @@ static void print_file(char *dirpath, const t_dirent *f, t_config *config)
 		make_fields(dirpath, f, config);
 	}
 }
-// static void print_file(char *dirpath, const t_dirent *f, t_config *config)
-// {
-// 	if (!ft_strcmp(f->d_name, ".") || !ft_strcmp(f->d_name, ".."))
-// 	{
-// 		if (config->files & FILES_SPECIAL)
-// 			ft_printf("%s\n", f->d_name);
-// 		else
-// 			return;
-// 	}
-// 	else if (f->d_name[0] == '.')
-// 	{
-// 		if (config->files & FILES_HIDDEN)
-// 			ft_printf("%s\n", f->d_name);
-// 		else
-// 			return;
-// 	}
-// 	else
-// 	{
-// 		ft_printf("%s\n", f->d_name);
-// 	}
-// }
 
 void print_list(char *dirpath, t_list **dirc, t_config *config)
 {

@@ -6,7 +6,7 @@
 /*   By: pleander <pleander@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/27 19:36:53 by pleander          #+#    #+#             */
-/*   Updated: 2025/03/27 21:25:43 by pleander         ###   ########.fr       */
+/*   Updated: 2025/04/01 18:46:07 by pleander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,8 @@ static void	get_file_type(t_fields *fields, struct stat *statbuf, int pos)
 		fields->mode[pos] = 'p';
 }
 
-void	get_mode(t_fields *fields, char *fpath)
+void	get_mode(t_fields *fields, struct stat *statbuf)
 {
-	struct	stat	statbuf;
-	char			*mode_str;
 	int				i;
 
 	fields->mode = reserve(sizeof(char) * 11);
@@ -68,8 +66,6 @@ void	get_mode(t_fields *fields, char *fpath)
 	i = 0;
 	ft_memset(fields->mode, '-', 10);
 	fields->mode[10] = '\0';
-	if (lstat(fpath, &statbuf) < 0)
-		error_exit("lstat");
-	get_file_type(fields, &statbuf, i);
-	get_user_modes(fields, &statbuf, i);
+	get_file_type(fields, statbuf, i);
+	get_user_modes(fields, statbuf, i);
 }
