@@ -65,7 +65,7 @@ void	apply_default_config(t_config *c);
 void	print_config(t_config *c);
 void	error_exit(char *msg);
 void	sort_files(t_list **files, t_config *config);
-void	print_list(char *dirpath, t_list **dirc, t_config *config);
+void	print_list(t_list **dirc, t_config *config);
 void	parse_args(int argc, char **argv, t_config *config, t_list **dirs);
 int		count_dirs(char **argv);
 void	get_mode(t_fields *fields, struct stat *statbuf);

@@ -29,7 +29,7 @@ static char * remove_leading_dots(char *s)
 	return (s + i);
 }
 
-static int lexcmp(const t_dirent *f1, const t_dirent *f2)
+static int lexcmp(const t_fields *f1, const t_fields *f2)
 {
 	char	*s1;
 	char	*s2;
@@ -37,8 +37,8 @@ static int lexcmp(const t_dirent *f1, const t_dirent *f2)
 	int c1;
 	int c2;
 
-	s1 = remove_leading_dots((char *)f1->d_name);
-	s2 = remove_leading_dots((char *)f2->d_name);
+	s1 = remove_leading_dots((char *)f1->filename);
+	s2 = remove_leading_dots((char *)f2->filename);
 	i = 0;
 	c1 = ft_toupper(s1[i]);
 	c2 = ft_toupper(s2[i]);

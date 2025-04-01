@@ -17,19 +17,6 @@
 #include "memlist.h"
 #include "ft_printf.h"
 
-static char *make_fpath(char *dirpath, const t_dirent *f)
-{
-	int		len;
-	char	*fpath;
-
-	len = ft_strlen(dirpath) + ft_strlen(f->d_name) + 2;
-	fpath = reserve(len);
-	if (!fpath)
-		error_exit("reserve");
-	if (ft_snprintf(fpath, len, "%s/%s", dirpath, f->d_name) < 0)
-		error_exit("ft_snprintf");
-	return (fpath);
-}
 
 static void	print_fields(t_fields *fields, t_config *config)
 {
@@ -42,53 +29,29 @@ static void	print_fields(t_fields *fields, t_config *config)
 	ft_printf("\n");
 }
 
-static void make_fields(char *dirpath, const t_dirent *f, t_config *config)
+static void print_file(t_fields *fields, t_config *config)
 {
-	struct stat statbuf;
-	t_fields	fields;
-	char		*fpath;
-
-	fields.filename = ft_strdup(f->d_name);
-	if (!fields.filename)
-		error_exit("ft_strdup");
-	memlist_add(fields.filename);
-	fpath = make_fpath(dirpath, f);
-	if (lstat(fpath, &statbuf) < 0)
-		error_exit("lstat");
-	if (config->fields & FIELDS_MODE)
-		get_mode(&fields, &statbuf);
-	if (config->fields & FIELDS_COUNT)
-		get_hard_link_count(&fields, &statbuf);
-	
-	print_fields(&fields, config);
-	
-	if (config->fields & FIELDS_MODE)
-		release(fields.mode);
-}
-
-static void print_file(char *dirpath, const t_dirent *f, t_config *config)
-{
-	if (!ft_strcmp(f->d_name, ".") || !ft_strcmp(f->d_name, ".."))
+	if (!ft_strcmp(fields->filename, ".") || !ft_strcmp(fields->filename, ".."))
 	{
 		if (config->files & FILES_SPECIAL)
-			make_fields(dirpath, f, config);
+			print_fields(fields, config);
 		else
 			return;
 	}
-	else if (f->d_name[0] == '.')
+	else if (fields->filename[0] == '.')
 	{
 		if (config->files & FILES_HIDDEN)
-			make_fields(dirpath, f, config);
+			print_fields(fields, config);
 		else
 			return;
 	}
 	else
 	{
-		make_fields(dirpath, f, config);
+		print_fields(fields, config);
 	}
 }
 
-void print_list(char *dirpath, t_list **dirc, t_config *config)
+void print_list(t_list **dirc, t_config *config)
 {
 	t_list *cur;
 
@@ -97,7 +60,7 @@ void print_list(char *dirpath, t_list **dirc, t_config *config)
 	cur = *dirc;
 	while (cur)
 	{
-		print_file(dirpath, (t_dirent *)cur->content, config);
+		print_file((t_fields *)cur->content, config);
 
 		cur = cur->next;
 	}

@@ -14,22 +14,57 @@
 #include <dirent.h>
 #include "libft.h"
 #include "memlist.h"
+#include "ft_printf.h"
 #include "ft_ls.h"
 
-static void read_dir(DIR *d, t_list **dirc)
+static char *make_fpath(char *dirpath, const t_dirent *f)
 {
-	t_list			*new;
-	t_dirent	*drnt_copy;
-	t_dirent	*drnt;
+	int		len;
+	char	*fpath;
 
-	drnt = readdir(d);
+	len = ft_strlen(dirpath) + ft_strlen(f->d_name) + 2;
+	fpath = reserve(len);
+	if (!fpath)
+		error_exit("reserve");
+	if (ft_snprintf(fpath, len, "%s/%s", dirpath, f->d_name) < 0)
+		error_exit("ft_snprintf");
+	return (fpath);
+}
+
+static void fill_fields(t_fields *fields, char *dirpath, t_dirent *dirent, t_config *config)
+{
+	char *fpath;
+	struct stat statbuf;
+
+	fpath = make_fpath(dirpath, dirent);
+	fields->filename = ft_strdup(dirent->d_name);
+	if (!fields->filename)
+		error_exit("ft_strdup");
+	if (lstat(fpath, &statbuf) < 0)
+		error_exit("lstat");
+	if (config->fields & FIELDS_MODE)
+		get_mode(fields, &statbuf);
+	if (config->fields & FIELDS_COUNT)
+		get_hard_link_count(fields, &statbuf);
+	memlist_add(fields->filename);
+}
+
+static void read_dir(char *path, t_list **dirc, t_config *config)
+{
+	t_list		*new;
+	t_fields	*fields;
+	t_dirent	*drnt;
+	DIR			*d;
+
+	d = opendir(path);
+	drnt = readdir(d); // Todo: handle closedir on error
 	while (drnt)
 	{
-		drnt_copy = reserve(sizeof(t_dirent));
-		if (!drnt_copy)
+		fields = reserve(sizeof(t_fields));
+		if (!fields)
 			error_exit("reserve");
-		ft_memcpy(drnt_copy, drnt, sizeof(t_dirent));
-		new = ft_lstnew(drnt_copy);
+		fill_fields(fields, path, drnt, config);
+		new = ft_lstnew(fields);
 		if (!new)
 			error_exit("ft_lstnew");
 		if (!memlist_add(new))
@@ -37,21 +72,19 @@ static void read_dir(DIR *d, t_list **dirc)
 		ft_lstadd_back(dirc, new);
 		drnt = readdir(d);
 	}
+	closedir(d);
 }
 
 int	ft_ls(char *path, t_config *config)
 {
-	DIR		*d;
 	t_list	**dirc;
 
 	dirc = creserve(1, sizeof(t_list *));
 	if (!dirc)
 		error_exit("creserve");
-	d = opendir(path);
-	read_dir(d, dirc);
-	closedir(d);
+	read_dir(path, dirc, config);
 	sort_files(dirc, config);
-	print_list(path, dirc, config);
+	print_list(dirc, config);
 	return (0);
 }
 
