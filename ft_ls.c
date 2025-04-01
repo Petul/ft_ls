@@ -6,7 +6,7 @@
 /*   By: pleander <pleander@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 16:04:12 by pleander          #+#    #+#             */
-/*   Updated: 2025/03/20 16:01:09 by pleander         ###   ########.fr       */
+/*   Updated: 2025/04/01 22:25:31 by pleander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,14 @@ static void fill_fields(t_fields *fields, char *dirpath, t_dirent *dirent, t_con
 	fields->filename = ft_strdup(dirent->d_name);
 	if (!fields->filename)
 		error_exit("ft_strdup");
+	memlist_add(fields->filename);
 	if (lstat(fpath, &statbuf) < 0)
 		error_exit("lstat");
-	if (config->fields & FIELDS_MODE)
-		get_mode(fields, &statbuf);
-	if (config->fields & FIELDS_COUNT)
-		get_hard_link_count(fields, &statbuf);
-	memlist_add(fields->filename);
+	get_mode(fields, &statbuf);
+	get_hard_link_count(fields, &statbuf);
+	get_uid(fields, statbuf.st_uid);
+	get_gid(fields, statbuf.st_gid);
+
 }
 
 static void read_dir(char *path, t_list **dirc, t_config *config)

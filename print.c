@@ -6,7 +6,7 @@
 /*   By: pleander <pleander@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 13:22:56 by pleander          #+#    #+#             */
-/*   Updated: 2025/04/01 18:49:51 by pleander         ###   ########.fr       */
+/*   Updated: 2025/04/01 22:25:58 by pleander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <sys/stat.h>
 #include "ft_ls.h"
 #include "libft.h"
-#include "memlist.h"
 #include "ft_printf.h"
 
 
@@ -24,8 +23,12 @@ static void	print_fields(t_fields *fields, t_config *config)
 		ft_printf("%s ", fields->mode);
 	if (config->fields & FIELDS_COUNT)
 		ft_printf("%s ", fields->hard_links);
+	if (config->fields & FIELDS_OWNER)
+		ft_printf("%s ", fields->owner);
+	if (config->fields & FIELDS_GROUP)
+		ft_printf("%s ", fields->group);
 	if (config->fields & FIELDS_FILENAME)
-		ft_printf("%s", fields->filename);
+		ft_printf("%s ", fields->filename);
 	ft_printf("\n");
 }
 
@@ -61,7 +64,6 @@ void print_list(t_list **dirc, t_config *config)
 	while (cur)
 	{
 		print_file((t_fields *)cur->content, config);
-
 		cur = cur->next;
 	}
 }

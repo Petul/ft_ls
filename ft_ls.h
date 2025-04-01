@@ -6,7 +6,7 @@
 /*   By: pleander <pleander@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:24:16 by pleander          #+#    #+#             */
-/*   Updated: 2025/04/01 18:44:00 by pleander         ###   ########.fr       */
+/*   Updated: 2025/04/01 22:25:46 by pleander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,7 @@ void	parse_args(int argc, char **argv, t_config *config, t_list **dirs);
 int		count_dirs(char **argv);
 void	get_mode(t_fields *fields, struct stat *statbuf);
 void	get_hard_link_count(t_fields *fields, struct stat *statbuf);
+void	get_uid(t_fields *fields, int uid);
+void	get_gid(t_fields *fields, int uid);
 
 #endif
