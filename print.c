@@ -6,7 +6,7 @@
 /*   By: pleander <pleander@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 13:22:56 by pleander          #+#    #+#             */
-/*   Updated: 2025/04/01 22:25:58 by pleander         ###   ########.fr       */
+/*   Updated: 2025/04/02 21:05:43 by pleander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,10 @@ static void	print_fields(t_fields *fields, t_config *config)
 		ft_printf("%s ", fields->owner);
 	if (config->fields & FIELDS_GROUP)
 		ft_printf("%s ", fields->group);
+	if (config->fields & FIELDS_SIZE)
+		ft_printf("%s ", fields->size);
+	// if (config->fields & FIELDS_TIME)
+	// 	ft_printf("%s ", fields->time);
 	if (config->fields & FIELDS_FILENAME)
 		ft_printf("%s ", fields->filename);
 	ft_printf("\n");

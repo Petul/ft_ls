@@ -6,7 +6,7 @@
 /*   By: pleander <pleander@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 16:04:12 by pleander          #+#    #+#             */
-/*   Updated: 2025/04/01 22:25:31 by pleander         ###   ########.fr       */
+/*   Updated: 2025/04/02 20:50:47 by pleander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ static void fill_fields(t_fields *fields, char *dirpath, t_dirent *dirent, t_con
 	get_hard_link_count(fields, &statbuf);
 	get_uid(fields, statbuf.st_uid);
 	get_gid(fields, statbuf.st_gid);
-
+	get_size(fields, statbuf.st_size);
+	get_mod_time(fields, &statbuf.st_mtim.tv_sec);
 }
 
 static void read_dir(char *path, t_list **dirc, t_config *config)

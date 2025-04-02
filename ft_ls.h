@@ -6,7 +6,7 @@
 /*   By: pleander <pleander@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:24:16 by pleander          #+#    #+#             */
-/*   Updated: 2025/04/01 22:25:46 by pleander         ###   ########.fr       */
+/*   Updated: 2025/04/02 20:50:10 by pleander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,7 @@ void	get_mode(t_fields *fields, struct stat *statbuf);
 void	get_hard_link_count(t_fields *fields, struct stat *statbuf);
 void	get_uid(t_fields *fields, int uid);
 void	get_gid(t_fields *fields, int uid);
+void	get_size(t_fields *fields, int size);
+void	get_mod_time(t_fields *fields, time_t *time);
 
 #endif
