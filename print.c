@@ -29,8 +29,8 @@ static void	print_fields(t_fields *fields, t_config *config)
 		ft_printf("%s ", fields->group);
 	if (config->fields & FIELDS_SIZE)
 		ft_printf("%s ", fields->size);
-	// if (config->fields & FIELDS_TIME)
-	// 	ft_printf("%s ", fields->time);
+	if (config->fields & FIELDS_TIME)
+		ft_printf("%s ", fields->time);
 	if (config->fields & FIELDS_FILENAME)
 		ft_printf("%s ", fields->filename);
 	ft_printf("\n");
