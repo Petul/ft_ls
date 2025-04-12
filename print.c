@@ -15,7 +15,22 @@
 #include "ft_ls.h"
 #include "libft.h"
 #include "ft_printf.h"
+#include "time.h"
 
+static void print_time(t_fields *fields)
+{
+	time_t	t;
+	char	*tstr;
+	char	*year;
+
+	t = time(NULL);
+	tstr = ctime(&t);
+	year = get_column(tstr, 4);
+	if (!ft_strncmp(year, fields->year, 4))
+		ft_printf("%s %s %s ", fields->month, fields->day, fields->time);
+	else
+		ft_printf("%s %s %s ", fields->month, fields->day, fields->year);
+}
 
 static void	print_fields(t_fields *fields, t_config *config)
 {
@@ -30,7 +45,7 @@ static void	print_fields(t_fields *fields, t_config *config)
 	if (config->fields & FIELDS_SIZE)
 		ft_printf("%s ", fields->size);
 	if (config->fields & FIELDS_TIME)
-		ft_printf("%s ", fields->time);
+		print_time(fields);
 	if (config->fields & FIELDS_FILENAME)
 		ft_printf("%s ", fields->filename);
 	ft_printf("\n");

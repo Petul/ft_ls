@@ -23,11 +23,10 @@
  * @param c column index
  * @return 
  */
-static char *get_column(char *str, int c)
+char *get_column(char *str, int c)
 {
 	int i;
 	int col;
-	//char *prev;
 
 	col = 0;
 	i = 0;
@@ -63,28 +62,44 @@ static char *get_day(char *t)
 	len = ft_strchr(day, ' ') - day;
 	day = ft_strndup(day, len);
 	if (!day)
-		error_exit("ft_substr");
+		error_exit("ft_strndup");
 	memlist_add(day);
 	return (day);
+}
+
+static char *get_time(char *t)
+{
+	char	*tim;
+
+	tim = get_column(t, 3);
+	tim = ft_strndup(tim, 5);
+	if (!tim)
+		error_exit("ft_strndup");
+	memlist_add(tim);
+	return (tim);
+}
+
+static char *get_year(char *t)
+{
+	char	*year;
+	int		len;
+
+	year = get_column(t, 4);
+	len = ft_strchr(year, '\n') - year;
+	year = ft_strndup(year, len);
+	if (!year)
+		error_exit("ft_strndup");
+	memlist_add(year);
+	return (year);
 }
 
 void get_mod_time(t_fields *fields, time_t *time)
 {
 	char	*t;
-	int		len;
-	char	*month;
-	char	*day;
 
 	t = ctime(time);
-	//fields->time = t;
-	month = get_month(t);
-	day	= get_day(t);
-	len = ft_snprintf(NULL, 0, "%s %s", month, day);
-	if (len < 0)
-		error_exit("ft_snprintf");
-	fields->time = reserve(len + 1);
-	if (!fields->time)
-		error_exit("reserve");
-	if (ft_snprintf(fields->time, len + 1, "%s %s", month, day) < 0)
-		error_exit("ft_snprintf");
+	fields->month = get_month(t);
+	fields->day = get_day(t);
+	fields->time = get_time(t);
+	fields->year = get_year(t);
 }

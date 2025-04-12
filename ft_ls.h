@@ -54,7 +54,10 @@ typedef struct	s_fields
 	char	*owner;
 	char	*group;
 	char	*size;
+	char	*month;
+	char	*day;
 	char	*time;
+	char	*year;
 	char	*filename;
 }	t_fields;
 
@@ -74,5 +77,6 @@ void	get_uid(t_fields *fields, int uid);
 void	get_gid(t_fields *fields, int uid);
 void	get_size(t_fields *fields, int size);
 void	get_mod_time(t_fields *fields, time_t *time);
+char	*get_column(char *str, int c);
 
 #endif
