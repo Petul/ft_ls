@@ -6,7 +6,7 @@
 /*   By: pleander <pleander@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:24:16 by pleander          #+#    #+#             */
-/*   Updated: 2025/04/02 20:50:10 by pleander         ###   ########.fr       */
+/*   Updated: 2025/04/13 21:21:24 by pleander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,19 @@ typedef struct	s_fields
 	char	*filename;
 }	t_fields;
 
+typedef struct s_totals {
+	int fw_mode;
+	int	fw_hard_links;
+	int	fw_owner;
+	int	fw_group;
+	int	fw_size;
+	int	fw_month;
+	int	fw_day;
+	int	fw_time;
+	int	fw_year;
+	int	fw_filename;
+}	t_totals;
+
 typedef struct dirent t_dirent;
 
 int		ft_ls(char *path, t_config *config);
@@ -78,5 +91,6 @@ void	get_gid(t_fields *fields, int uid);
 void	get_size(t_fields *fields, int size);
 void	get_mod_time(t_fields *fields, time_t *time);
 char	*get_column(char *str, int c);
+void	calc_totals(t_list *dirc, t_totals *totals);
 
 #endif
