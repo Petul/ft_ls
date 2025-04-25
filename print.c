@@ -19,19 +19,6 @@
 #include "time.h"
 #include "memlist.h"
 
-static void print_time(t_fields *fields)
-{
-	time_t	t;
-	char	*tstr;
-	char	*year;
-
-	t = time(NULL);
-	tstr = ctime(&t);
-	year = get_column(tstr, 4);
-	if (!ft_strncmp(year, fields->year, 4)) ft_printf("%s %s %s ", fields->month, fields->day, fields->time); else
-		ft_printf("%s %s %s ", fields->month, fields->day, fields->year);
-}
-
 static void print_fw(char *str, int fw)
 {
 	int		len;
@@ -44,6 +31,23 @@ static void print_fw(char *str, int fw)
 	ft_snprintf(fstr, len + 1, "%%%ds ", fw);
 	ft_printf(fstr, str);
 	release(fstr);
+}
+
+static void print_time(t_fields *fields, t_totals *totals)
+{
+	time_t	t;
+	char	*tstr;
+	char	*year;
+
+	t = time(NULL);
+	tstr = ctime(&t);
+	year = get_column(tstr, 4);
+	print_fw(fields->month, totals->fw_month);
+	print_fw(fields->day, totals->fw_day);
+	if (!ft_strncmp(year, fields->year, 4))
+		print_fw(fields->time, totals->fw_time);
+	else
+		print_fw(fields->year, totals->fw_year);
 }
 
 static void	print_fields(t_fields *fields, t_totals *totals, t_config *config)
@@ -59,10 +63,10 @@ static void	print_fields(t_fields *fields, t_totals *totals, t_config *config)
 	if (config->fields & FIELDS_SIZE)
 		print_fw(fields->size, totals->fw_size);
 	if (config->fields & FIELDS_TIME)
-		print_time(fields);
+		print_time(fields, totals);
 	if (config->fields & FIELDS_FILENAME)
 		ft_printf(fields->filename);
-	printf("\n");
+	ft_printf("\n");
 }
 
 static void print_file(t_fields *fields, t_totals *totals, t_config *config)
