@@ -52,6 +52,8 @@ static void print_time(t_fields *fields, t_totals *totals)
 
 static void	print_fields(t_fields *fields, t_totals *totals, t_config *config)
 {
+	if (config->fields & FIELDS_BLOCKS)
+	 	print_fw(fields->blocks, totals->fw_blocks);
 	if (config->fields & FIELDS_MODE)
 		print_fw(fields->mode, totals->fw_mode);
 	if (config->fields & FIELDS_COUNT)
@@ -69,28 +71,6 @@ static void	print_fields(t_fields *fields, t_totals *totals, t_config *config)
 	ft_printf("\n");
 }
 
-static void print_file(t_fields *fields, t_totals *totals, t_config *config)
-{
-	if (!ft_strcmp(fields->filename, ".") || !ft_strcmp(fields->filename, ".."))
-	{
-		if (config->files & FILES_SPECIAL)
-			print_fields(fields, totals, config);
-		else
-			return;
-	}
-	else if (fields->filename[0] == '.')
-	{
-		if (config->files & FILES_HIDDEN)
-			print_fields(fields, totals, config);
-		else
-			return;
-	}
-	else
-	{
-		print_fields(fields, totals, config);
-	}
-}
-
 void print_list(t_list **dirc, t_config *config)
 {
 	t_list		*cur;
@@ -100,9 +80,11 @@ void print_list(t_list **dirc, t_config *config)
 		return;
 	calc_totals(*dirc, &totals);
 	cur = *dirc;
+	if (config->other & OTHER_TOTAL_BLOCKS)
+		ft_printf("total %d\n", totals.total_blocks);
 	while (cur)
 	{
-		print_file((t_fields *)cur->content, &totals, config);
+ 		print_fields((t_fields *)cur->content, &totals, config);
 		cur = cur->next;
 	}
 }

@@ -28,7 +28,12 @@ static int	read_flag(char f, t_config *config)
 	else if (f == 'l')
 	{
 		config->fields = 255; // Enable all fields
+		config->fields ^= FIELDS_BLOCKS; // Disable block view by default
+		config->other |= OTHER_TOTAL_BLOCKS;
 	}
+	else if (f == 's')
+		config->fields |= FIELDS_BLOCKS;
+		config->other |= OTHER_TOTAL_BLOCKS;
 	return (1);
 }
 

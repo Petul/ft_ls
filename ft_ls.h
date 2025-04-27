@@ -24,6 +24,7 @@
 #define FIELDS_SIZE			(1 << 4)
 #define FIELDS_TIME			(1 << 5)
 #define FIELDS_FILENAME		(1 << 6)
+#define FIELDS_BLOCKS		(1 << 7)
 
 #define TT_CREATION_TIME	(1 << 0)
 #define TT_ACCESS_TIME		(1 << 1)
@@ -35,7 +36,9 @@
 #define LIST_TYPE_LIST		(1 << 0)
 #define LIST_TYPE_ROWS		(1 << 1)
 
-#define FLAGS "al"
+#define OTHER_TOTAL_BLOCKS	(1 << 0)
+
+#define FLAGS "als"
 
 typedef struct s_config
 {
@@ -44,6 +47,7 @@ typedef struct s_config
 	uint8_t files;
 	uint8_t list_type;
 	uint8_t sort_by;
+	uint8_t other;
 
 }	t_config;
 
@@ -54,6 +58,8 @@ typedef struct	s_fields
 	char	*owner;
 	char	*group;
 	char	*size;
+	int		blocks_int;
+	char	*blocks;
 	char	*month;
 	char	*day;
 	char	*time;
@@ -62,6 +68,8 @@ typedef struct	s_fields
 }	t_fields;
 
 typedef struct s_totals {
+	int	total_blocks;
+	int fw_blocks;
 	int fw_mode;
 	int	fw_hard_links;
 	int	fw_owner;
@@ -92,5 +100,6 @@ void	get_size(t_fields *fields, int size);
 void	get_mod_time(t_fields *fields, time_t *time);
 char	*get_column(char *str, int c);
 void	calc_totals(t_list *dirc, t_totals *totals);
+void	get_blocks(t_fields *fields, int blocks);
 
 #endif

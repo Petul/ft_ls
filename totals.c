@@ -20,6 +20,9 @@ void calc_totals(t_list *dirc, t_totals *totals)
 	while (dirc)
 	{
 		field = (t_fields *)dirc->content;
+		totals->total_blocks += field->blocks_int;
+		if (ft_strlen(field->blocks) > totals->fw_blocks)
+			totals->fw_blocks = ft_strlen(field->blocks);
 		if (ft_strlen(field->mode) > totals->fw_mode)
 			totals->fw_mode = ft_strlen(field->mode);
 		if (ft_strlen(field->hard_links) > totals->fw_hard_links)

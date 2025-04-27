@@ -48,7 +48,25 @@ static void fill_fields(t_fields *fields, char *dirpath, t_dirent *dirent, t_con
 	get_uid(fields, statbuf.st_uid);
 	get_gid(fields, statbuf.st_gid);
 	get_size(fields, statbuf.st_size);
+	get_blocks(fields, statbuf.st_blocks);
 	get_mod_time(fields, &statbuf.st_mtim.tv_sec);
+}
+
+static int read_file(char *fname, t_config *config)
+{
+	if (fname[0] == '.')
+	{
+		if (config->files & FILES_HIDDEN)
+			return (1);
+		return (0);
+	}
+	if (!ft_strcmp(fname, ".") || !ft_strcmp(fname, ".."))
+	{
+		if (config->files & FILES_SPECIAL)
+			return (1);
+		return (0);
+	}
+	return (1);
 }
 
 static void read_dir(char *path, t_list **dirc, t_config *config)
@@ -62,16 +80,19 @@ static void read_dir(char *path, t_list **dirc, t_config *config)
 	drnt = readdir(d); // Todo: handle closedir on error
 	while (drnt)
 	{
-		fields = reserve(sizeof(t_fields));
-		if (!fields)
-			error_exit("reserve");
-		fill_fields(fields, path, drnt, config);
-		new = ft_lstnew(fields);
-		if (!new)
-			error_exit("ft_lstnew");
-		if (!memlist_add(new))
-			error_exit("memlist_add");
-		ft_lstadd_back(dirc, new);
+		if (read_file(drnt->d_name, config))
+		{
+			fields = reserve(sizeof(t_fields));
+			if (!fields)
+				error_exit("reserve");
+			fill_fields(fields, path, drnt, config);
+			new = ft_lstnew(fields);
+			if (!new)
+				error_exit("ft_lstnew");
+			if (!memlist_add(new))
+				error_exit("memlist_add");
+			ft_lstadd_back(dirc, new);
+		}
 		drnt = readdir(d);
 	}
 	closedir(d);

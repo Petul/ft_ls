@@ -21,3 +21,15 @@ void get_size(t_fields *fields, int size)
 		error_exit("ft_itoa");
 	memlist_add(fields->size);
 }
+
+// stat reports blocks in 512 bytes but ls reportes
+// number of 1024 bytes blocks, so dividing by 2
+// should produce correct result
+void get_blocks(t_fields *fields, int blocks)
+{
+	fields->blocks_int = blocks / 2;
+	fields->blocks = ft_itoa(fields->blocks_int);
+	if (!fields->blocks)
+		error_exit("ft_itoa");
+	memlist_add(fields->blocks);
+}
