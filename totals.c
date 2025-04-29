@@ -21,27 +21,27 @@ void calc_totals(t_list *dirc, t_totals *totals)
 	{
 		field = (t_fields *)dirc->content;
 		totals->total_blocks += field->blocks_int;
-		if (ft_strlen(field->blocks) > totals->fw_blocks)
+		if (ft_strlen(field->blocks) > (size_t)totals->fw_blocks)
 			totals->fw_blocks = ft_strlen(field->blocks);
-		if (ft_strlen(field->mode) > totals->fw_mode)
+		if (ft_strlen(field->mode) > (size_t)totals->fw_mode)
 			totals->fw_mode = ft_strlen(field->mode);
-		if (ft_strlen(field->hard_links) > totals->fw_hard_links)
+		if (ft_strlen(field->hard_links) > (size_t)totals->fw_hard_links)
 			totals->fw_hard_links = ft_strlen(field->hard_links);
-		if (ft_strlen(field->owner) > totals->fw_owner)
+		if (ft_strlen(field->owner) > (size_t)totals->fw_owner)
 			totals->fw_owner = ft_strlen(field->owner);
-		if (ft_strlen(field->group) > totals->fw_group)
+		if (ft_strlen(field->group) > (size_t)totals->fw_group)
 			totals->fw_group = ft_strlen(field->group);
-		if (ft_strlen(field->size) > totals->fw_size)
+		if (ft_strlen(field->size) > (size_t)totals->fw_size)
 			totals->fw_size = ft_strlen(field->size);
-		if (ft_strlen(field->month) > totals->fw_month)
+		if (ft_strlen(field->month) > (size_t)totals->fw_month)
 			totals->fw_month = ft_strlen(field->month);
-		if (ft_strlen(field->day) > totals->fw_day)
+		if (ft_strlen(field->day) > (size_t)totals->fw_day)
 			totals->fw_day = ft_strlen(field->day);
-		if (ft_strlen(field->time) > totals->fw_time)
+		if (ft_strlen(field->time) > (size_t)totals->fw_time)
 			totals->fw_time = ft_strlen(field->time);
-		if (ft_strlen(field->year) > totals->fw_year)
+		if (ft_strlen(field->year) > (size_t)totals->fw_year)
 			totals->fw_year = ft_strlen(field->year);
-		if (ft_strlen(field->filename) > totals->fw_filename)
+		if (ft_strlen(field->filename) > (size_t)totals->fw_filename)
 			totals->fw_filename = ft_strlen(field->filename);
 		dirc = dirc->next;
 	}
