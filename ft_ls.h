@@ -6,7 +6,7 @@
 /*   By: pleander <pleander@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:24:16 by pleander          #+#    #+#             */
-/*   Updated: 2025/04/13 21:21:24 by pleander         ###   ########.fr       */
+/*   Updated: 2025/05/08 21:28:01 by pleander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@
 #define LIST_TYPE_ROWS		(1 << 1)
 
 #define OTHER_TOTAL_BLOCKS	(1 << 0)
+#define OTHER_RECURSIVE		(1 << 1)
 
-#define FLAGS "als"
+#define FLAGS "alsR"
 
 typedef struct s_config
 {
@@ -101,5 +102,6 @@ void	get_mod_time(t_fields *fields, time_t *time);
 char	*get_column(char *str, int c);
 void	calc_totals(t_list *dirc, t_totals *totals);
 void	get_blocks(t_fields *fields, int blocks);
+void	add_dirs_recursively(t_list *dirs, t_config *config);
 
 #endif

@@ -36,6 +36,8 @@ static int	read_flag(char f, t_config *config)
 		config->fields |= FIELDS_BLOCKS;
 		config->other |= OTHER_TOTAL_BLOCKS;
 	}
+	if (f == 'R')
+		config->other |= OTHER_RECURSIVE;
 	return (1);
 }
 

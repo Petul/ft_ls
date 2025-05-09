@@ -6,7 +6,7 @@
 /*   By: pleander <pleander@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/14 14:37:58 by pleander          #+#    #+#             */
-/*   Updated: 2025/03/21 10:40:07 by pleander         ###   ########.fr       */
+/*   Updated: 2025/05/08 21:27:07 by pleander         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	main(int argc, char **argv)
 		memlist_add(new);
 		ft_lstadd_back(&dirs, new);
 	}
+	if (config.other & OTHER_RECURSIVE)
+		add_dirs_recursively(dirs, &config);
 	list_dirs(dirs, &config);
 	memlist_release_all();
 	return (0);

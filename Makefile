@@ -6,14 +6,14 @@
 #    By: pleander <pleander@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/03/16 13:02:00 by pleander          #+#    #+#              #
-#    Updated: 2025/04/13 22:09:09 by pleander         ###   ########.fr        #
+#    Updated: 2025/05/08 21:28:14 by pleander         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME := ft_ls
 CC := gcc
 CFLAGS := -Wall -Wextra -g #-Werror
-CFILES := main.c config.c ft_ls.c error.c sort.c print.c parse_args.c mode.c link.c uid.c size.c time.c totals.c
+CFILES := main.c config.c ft_ls.c error.c sort.c print.c parse_args.c mode.c link.c uid.c size.c time.c totals.c recurse_dirs.c
 INCLUDES := libft/include
 
 LIBFT := libft/libft.a
