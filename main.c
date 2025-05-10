@@ -34,6 +34,7 @@ int	main(int argc, char **argv)
 	}
 	if (config.other & OTHER_RECURSIVE)
 		add_dirs_recursively(dirs, &config);
+	ft_lstsort(&dirs, &ft_strcmp);
 	list_dirs(dirs, &config);
 	memlist_release_all();
 	return (0);
