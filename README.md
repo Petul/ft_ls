@@ -1,4 +1,4 @@
-#ft_ls
+# ft_ls
 
 clone of the `ls` command but has limited options and much slower than the real one.
 
